@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Next ERA — The Next Era of Entertainment. We design, supply and execute full arcade and bowling entertainment centers across Egypt and the Gulf." />
+<title>Next ERA — The Next Era of Entertainment</title>
+
+<!-- DOMAIN: insert purchased domain here -->
+
+<!-- Google Fonts: English + Arabic -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<!-- AOS for scroll animations -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ===== COLOR PALETTE ===== */
+  :root {
+    --bg-base:      #0a0a0f;
+    --bg-elev:      #12121a;
+    --bg-card:      #171724;
+    --bg-card-2:    #1d1d2e;
+    --border:       rgba(255,255,255,0.08);
+    --border-strong:rgba(255,255,255,0.16);
+    --text:         #f5f5fa;
+    --text-dim:     #a8a8b8;
+    --text-mute:    #6e6e82;
+
+    /* Logo-derived accents */
+    --blue:         #1d7ef7;
+    --orange:       #ff7a1a;
+    --red:          #ff3b4e;
+    --yellow:       #ffcc2e;
+    --lavender:     #a78bff;
+    --teal:         #26d4c7;
+
+    --gradient-hero: radial-gradient(ellipse at 20% 20%, rgba(29,126,247,0.25), transparent 50%),
+                     radial-gradient(ellipse at 80% 30%, rgba(255,122,26,0.22), transparent 50%),
+                     radial-gradient(ellipse at 50% 80%, rgba(167,139,255,0.20), transparent 55%),
+                     linear-gradient(180deg, #05050b 0%, #0a0a0f 100%);
+    --gradient-card: linear-gradient(135deg, rgba(29,126,247,0.15), rgba(255,59,78,0.10) 50%, rgba(255,204,46,0.10));
+    --gradient-accent: linear-gradient(135deg, var(--blue), var(--lavender) 50%, var(--orange));
+
+    --radius-sm: 10px;
+    --radius:    16px;
+    --radius-lg: 22px;
+    --shadow-sm: 0 4px 16px rgba(0,0,0,0.25);
+    --shadow:    0 16px 40px rgba(0,0,0,0.45);
+    --shadow-lg: 0 24px 60px rgba(0,0,0,0.6);
+
+    --max-w: 1280px;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg-base);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at top, rgba(29,126,247,0.07), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(255,122,26,0.05), transparent 55%);
+    z-index: 0;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  /* ===== ARABIC RTL ===== */
+  html[lang="ar"] body, html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ar"] h4 {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    letter-spacing: 0;
+  }
+  html[lang="ar"] { direction: rtl; }
+
+  /* ===== LAYOUT ===== */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+  section { padding: 120px 0; position: relative; }
+  @media (max-width: 768px) { section { padding: 80px 0; } }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+    padding: 6px 14px;
+    border: 1px solid rgba(29,126,247,0.35);
+    border-radius: 999px;
+    background: rgba(29,126,247,0.08);
+  }
+  .section-title {
+    font-size: clamp(28px, 4.5vw, 52px);
+    margin-bottom: 16px;
+    max-width: 780px;
+  }
+  .section-sub {
+    font-size: clamp(15px, 1.3vw, 18px);
+    color: var(--text-dim);
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+
+  /* ===== NAVBAR ===== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 0;
+    background: rgba(10,10,15,0.6);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s, padding .3s;
+  }
+  .nav.scrolled {
+    border-bottom-color: var(--border);
+    background: rgba(10,10,15,0.85);
+    padding: 10px 0;
+  }
+  .nav-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+  }
+  .nav-brand img {
+    height: 36px;
+    width: auto;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: color .2s;
+    position: relative;
+  }
+  .nav-links a.active, .nav-links a:hover { color: var(--text); }
+  .nav-links a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -6px; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+  }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .lang-toggle {
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    transition: all .2s;
+  }
+  .lang-toggle:hover { background: rgba(255,255,255,0.06); border-color: var(--blue); }
+  .nav-cta {
+    padding: 10px 18px;
+    background: var(--gradient-accent);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(29,126,247,0.35); }
+
+  .nav-burger {
+    display: none;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    align-items: center; justify-content: center;
+  }
+  .nav-burger span {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--text);
+    position: relative;
+  }
+  .nav-burger span::before, .nav-burger span::after {
+    content: ""; position: absolute; left: 0;
+    width: 18px; height: 2px; background: var(--text);
+  }
+  .nav-burger span::before { top: -6px; }
+  .nav-burger span::after  { top:  6px; }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: rgba(10,10,15,0.98); border-top: 1px solid var(--border); padding: 16px 24px; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 14px 0; width: 100%; border-bottom: 1px solid var(--border); }
+    .nav-links a.active::after { display: none; }
+    .nav-burger { display: flex; }
+    .nav-cta { display: none; }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 120px 24px 80px;
+    text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: var(--gradient-hero);
+    z-index: 0;
+  }
+  .hero video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.45;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,15,0.35) 0%, rgba(10,10,15,0.65) 60%, var(--bg-base) 100%);
+    z-index: 1;
+  }
+  .hero-particles {
+    position: absolute; inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-logo {
+    height: clamp(90px, 14vw, 160px);
+    width: auto;
+    margin: 0 auto 32px;
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,0.5));
+  }
+  .hero-tagline {
+    font-size: clamp(34px, 6vw, 72px);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #dcdcf0 40%, var(--lavender) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 20px;
+    line-height: 1.05;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 1.4vw, 18px);
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 auto 40px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--gradient-accent);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(29,126,247,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(167,139,255,0.45); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: var(--text); }
+
+  .scroll-arrow {
+    position: absolute;
+    left: 50%; bottom: 36px;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 28px; height: 44px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+  .scroll-arrow::after {
+    content: "";
+    width: 4px; height: 8px;
+    background: #fff;
+    border-radius: 2px;
+    animation: scroll-bounce 1.8s infinite;
+  }
+  @keyframes scroll-bounce {
+    0%   { transform: translateY(0);  opacity: 1; }
+    70%  { transform: translateY(14px); opacity: 0; }
+    100% { transform: translateY(0);  opacity: 0; }
+  }
+
+  /* ===== ABOUT ===== */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .about-copy p {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 560px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .stat-card {
+    padding: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--gradient-accent);
+  }
+  .stat-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 15px;
+    color: var(--text-dim);
+  }
+
+  /* ===== SERVICES ===== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1000px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .services-grid { grid-template-columns: 1fr; } }
+  .service-card {
+    padding: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s, border-color .3s, background .3s;
+  }
+  .service-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-card);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: var(--border-strong); }
+  .service-card:hover::after { opacity: 0.6; }
+  .service-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    margin-bottom: 18px;
+    position: relative; z-index: 1;
+  }
+  .service-title {
+    font-size: 22px;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .service-desc {
+    color: var(--text-dim);
+    font-size: 15px;
+    position: relative; z-index: 1;
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .service-icon svg { width: 22px; height: 22px; stroke: var(--text); }
+
+  /* ===== PROJECTS ===== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1000px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .projects-grid { grid-template-columns: 1fr; } }
+
+  .project-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .3s, border-color .3s;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .project-card:hover { transform: translateY(-6px); border-color: var(--border-strong); }
+  .project-card.featured {
+    grid-column: 1 / -1;
+    min-height: 420px;
+  }
+  @media (min-width: 1001px) {
+    .project-card.featured { min-height: 480px; }
+  }
+  .project-visual {
+    position: relative;
+    flex: 1;
+    background:
+      linear-gradient(135deg, rgba(29,126,247,0.18), rgba(167,139,255,0.14) 50%, rgba(255,122,26,0.14)),
+      var(--bg-card-2);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .project-visual::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.04), transparent 60%);
+  }
+  .project-placeholder-icon {
+    width: 56px; height: 56px;
+    opacity: 0.35;
+    stroke: #fff;
+    stroke-width: 1.5;
+  }
+  .project-card.featured .project-visual {
+    background:
+      linear-gradient(135deg, rgba(255,122,26,0.2), rgba(255,59,78,0.14) 45%, rgba(29,126,247,0.2)),
+      var(--bg-card-2);
+  }
+  .project-info {
+    padding: 22px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .project-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .project-city {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .project-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255,122,26,0.15);
+    border: 1px solid rgba(255,122,26,0.35);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+  .project-view {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color .2s;
+  }
+  .project-card:hover .project-view { color: var(--text); }
+
+  .inlane-logo-wrap {
+    position: relative;
+    z-index: 2;
+    width: min(360px, 80%);
+    background: #ffffff;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .inlane-logo-wrap img { width: 100%; height: auto; }
+  .featured-hint {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 3;
+  }
+  html[dir="rtl"] .featured-hint { left: auto; right: 20px; }
+
+  /* ===== LEADERSHIP ===== */
+  .leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1000px) { .leaders-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .leaders-grid { grid-template-columns: 1fr; } }
+  .leader-card {
+    padding: 32px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+    transition: transform .3s, border-color .3s;
+  }
+  .leader-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+  .avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .a1 { background: linear-gradient(135deg, var(--blue), var(--lavender)); }
+  .a2 { background: linear-gradient(135deg, var(--orange), var(--red)); }
+  .a3 { background: linear-gradient(135deg, var(--teal), var(--blue)); }
+  .a4 { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
+  .leader-name {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .leader-role {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .leader-bio {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-wrap .section-title, .contact-wrap .section-sub { margin-left: auto; margin-right: auto; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 48px 0 36px;
+  }
+  @media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    padding: 26px 22px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: left;
+    transition: border-color .3s, transform .3s;
+  }
+  html[dir="rtl"] .contact-card { text-align: right; }
+  .contact-card:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+  .contact-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .contact-value {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .contact-value a:hover { color: var(--blue); }
+  .contact-ctas {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+    background: linear-gradient(180deg, var(--bg-base), #050508);
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  .footer-logo { height: 52px; width: auto; }
+  .footer-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .footer-links {
+    display: flex; gap: 28px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-top: 12px;
+  }
+
+  /* ===== FLOATING WHATSAPP ===== */
+  .whatsapp-float {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    box-shadow: 0 10px 30px rgba(37,211,102,0.4), 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.08);
+    box-shadow: 0 14px 40px rgba(37,211,102,0.55);
+  }
+  .whatsapp-float svg { width: 28px; height: 28px; fill: #fff; }
+  html[dir="rtl"] .whatsapp-float { right: auto; left: 22px; }
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(5,5,10,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto 24px;
+    width: 100%;
+    padding-top: 8px;
+  }
+  .lightbox-title { font-size: 22px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+  .lightbox-sub { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+  .lightbox-close {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.16); }
+  .lightbox-close svg { width: 18px; height: 18px; stroke: #fff; }
+  .lightbox-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    gap: 20px;
+  }
+  .lightbox-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg-card-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .lightbox-video video, .lightbox-video iframe { width: 100%; height: 100%; display: block; }
+  .lightbox-placeholder {
+    background:
+      linear-gradient(135deg, rgba(29,126,247,0.18), rgba(167,139,255,0.14) 50%, rgba(255,122,26,0.14)),
+      var(--bg-card-2);
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .lightbox-placeholder svg { width: 40px; height: 40px; opacity: 0.5; }
+  .lightbox-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .gallery-tile {
+    aspect-ratio: 4/3;
+    background:
+      linear-gradient(135deg, rgba(29,126,247,0.12), rgba(255,122,26,0.12)),
+      var(--bg-card-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .gallery-tile img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-tile svg { width: 32px; height: 32px; opacity: 0.35; stroke: #fff; }
+  body.noscroll { overflow: hidden; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+</style>
+</head>
+
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">
+      <!-- NEXT ERA LOGO: replace src if path changes -->
+      <img src="logos/next_era_logo.png" alt="Next ERA" onerror="this.style.display='none'">
+      <span data-en="Next ERA" data-ar="نكست إيرا">Next ERA</span>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#about"       data-en="About"       data-ar="من نحن">About</a>
+      <a href="#services"    data-en="Services"    data-ar="خدماتنا">Services</a>
+      <a href="#projects"    data-en="Projects"    data-ar="مشاريعنا">Projects</a>
+      <a href="#leadership"  data-en="Leadership"  data-ar="القيادة">Leadership</a>
+      <a href="#contact"     data-en="Contact"     data-ar="تواصل">Contact</a>
+    </div>
+
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+        <span id="langLabel">عربي</span>
+      </button>
+      <a href="#contact" class="nav-cta" data-en="Start Project" data-ar="ابدأ مشروعك">Start Project</a>
+      <button class="nav-burger" id="burger" aria-label="Menu"><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- HERO VIDEO: replace src with hosted video URL -->
+  <video autoplay muted loop playsinline poster="" id="heroVideo">
+    <!-- <source src="REPLACE_WITH_HOSTED_VIDEO_URL.mp4" type="video/mp4"> -->
+  </video>
+
+  <canvas class="hero-particles" id="particles"></canvas>
+
+  <div class="hero-content">
+    <!-- NEXT ERA LOGO: replace src if path changes -->
+    <img class="hero-logo" src="logos/next_era_logo.png" alt="Next ERA"
+         onerror="this.outerHTML='<div style=&quot;font-family:Space Grotesk,sans-serif;font-size:48px;font-weight:800;letter-spacing:0.05em;margin-bottom:24px;&quot;>NEXT<span style=&quot;color:var(--orange);&quot;>ERA</span></div>'">
+
+    <h1 class="hero-tagline" data-en="The Next Era of Entertainment"
+                             data-ar="العصر القادم من الترفيه">
+      The Next Era of Entertainment
+    </h1>
+
+    <p class="hero-sub"
+       data-en="We design, supply and execute full arcade and bowling entertainment centers — from concept to opening day."
+       data-ar="بنصمم، نوفر وننفذ مراكز ترفيه كاملة للبولينج والألعاب — من الفكرة لحد يوم الافتتاح.">
+      We design, supply and execute full arcade and bowling entertainment centers — from concept to opening day.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#contact"  class="btn btn-primary" data-en="Start Your Project" data-ar="ابدأ مشروعك">Start Your Project</a>
+      <a href="#projects" class="btn btn-ghost"   data-en="View Our Projects"   data-ar="شوف مشاريعنا">View Our Projects</a>
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-arrow" aria-label="Scroll down"></a>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-copy" data-aos="fade-up">
+        <span class="eyebrow" data-en="ABOUT NEXT ERA" data-ar="عن نكست إيرا">ABOUT NEXT ERA</span>
+        <h2 class="section-title"
+            data-en="A full-service partner for world-class entertainment venues."
+            data-ar="شريكك المتكامل لإنشاء أفخم مراكز الترفيه في العالم.">
+          A full-service partner for world-class entertainment venues.
+        </h2>
+        <p data-en="Next ERA is a specialist entertainment project company built on decades of hands-on operational experience across bowling, arcades, and family entertainment centers in Egypt, Saudi Arabia, the Gulf and the UAE. We handle the journey end-to-end — so our clients open smoothly and operate profitably."
+           data-ar="نكست إيرا شركة متخصصة في مشاريع الترفيه، مبنية على عقود من الخبرة العملية في البولينج والألعاب ومراكز الترفيه العائلية في مصر والسعودية والخليج والإمارات. بنتولى الرحلة كاملة — عشان عملاءنا يفتتحوا بسلاسة ويشتغلوا بربحية.">
+          Next ERA is a specialist entertainment project company built on decades of hands-on operational experience across bowling, arcades, and family entertainment centers in Egypt, Saudi Arabia, the Gulf and the UAE. We handle the journey end-to-end — so our clients open smoothly and operate profitably.
+        </p>
+      </div>
+
+      <div class="stats" data-aos="fade-up" data-aos-delay="150">
+        <div class="stat-card">
+          <div class="stat-number">80+</div>
+          <div class="stat-label" data-en="Years of combined leadership experience"
+                                   data-ar="سنة خبرة قيادية مجمّعة">
+            Years of combined leadership experience
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label" data-en="Signature projects delivered across Egypt"
+                                   data-ar="مشاريع مميّزة منفذة في مصر">
+            Signature projects delivered across Egypt
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">6</div>
+          <div class="stat-label" data-en="Integrated services from design to support"
+                                   data-ar="خدمات متكاملة من التصميم للدعم">
+            Integrated services from design to support
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SERVICES ==================== -->
+<section id="services">
+  <div class="container">
+    <div data-aos="fade-up">
+      <span class="eyebrow" data-en="OUR SERVICES" data-ar="خدماتنا">OUR SERVICES</span>
+      <h2 class="section-title"
+          data-en="Everything you need to launch and run an entertainment venue."
+          data-ar="كل اللي تحتاجه عشان تطلق وتشغل مركز ترفيه.">
+        Everything you need to launch and run an entertainment venue.
+      </h2>
+      <p class="section-sub"
+         data-en="End-to-end delivery, from first sketch to opening day — and beyond."
+         data-ar="تنفيذ متكامل، من أول رسمة لحد يوم الافتتاح — وأكتر.">
+        End-to-end delivery, from first sketch to opening day — and beyond.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card" data-aos="fade-up">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/>
+          </svg>
+        </div>
+        <div class="service-num">01</div>
+        <h3 class="service-title" data-en="Layout & Design" data-ar="التخطيط والتصميم">Layout &amp; Design</h3>
+        <p class="service-desc"
+           data-en="Concept planning, space optimization and venue design tailored to your audience, footprint and business model."
+           data-ar="تخطيط المفهوم، استغلال المساحة، وتصميم المكان بما يناسب جمهورك ومساحتك ونموذج شغلك.">
+          Concept planning, space optimization and venue design tailored to your audience, footprint and business model.
+        </p>
+      </div>
+      <div class="service-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/>
+          </svg>
+        </div>
+        <div class="service-num">02</div>
+        <h3 class="service-title" data-en="Games Mix Selection" data-ar="اختيار تشكيلة الألعاب">Games Mix Selection</h3>
+        <p class="service-desc"
+           data-en="Curated selection of arcade, redemption, bowling and attraction equipment optimized for revenue and guest flow."
+           data-ar="اختيار مدروس لمعدات الأركيد والبولينج والألعاب والجوائز، بحيث تحقق أعلى إيرادات وأفضل تدفق للزوار.">
+          Curated selection of arcade, redemption, bowling and attraction equipment optimized for revenue and guest flow.
+        </p>
+      </div>
+      <div class="service-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7h18M3 12h18M3 17h18"/><circle cx="7" cy="7" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="17" cy="17" r="1.2"/>
+          </svg>
+        </div>
+        <div class="service-num">03</div>
+        <h3 class="service-title" data-en="Supplier & Quotation Management" data-ar="إدارة الموردين والعروض">Supplier &amp; Quotation Management</h3>
+        <p class="service-desc"
+           data-en="We handle supplier outreach, negotiations and final quotations — leveraging our global relationships for best pricing and lead times."
+           data-ar="بنتولى التواصل مع الموردين والتفاوض والعروض النهائية، مستفيدين من علاقاتنا العالمية لأفضل الأسعار ومواعيد التسليم.">
+          We handle supplier outreach, negotiations and final quotations — leveraging our global relationships for best pricing and lead times.
+        </p>
+      </div>
+      <div class="service-card" data-aos="fade-up">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20l6-6 4 4 8-8"/><path d="M14 10h7v7"/>
+          </svg>
+        </div>
+        <div class="service-num">04</div>
+        <h3 class="service-title" data-en="Project Execution & Installation" data-ar="تنفيذ وتركيب المشروع">Project Execution &amp; Installation</h3>
+        <p class="service-desc"
+           data-en="On-ground project management and physical installation of all games and attractions — delivered on time and on spec."
+           data-ar="إدارة ميدانية للمشروع وتركيب كامل للألعاب والمعدات — تسليم في الوقت وبالمواصفات.">
+          On-ground project management and physical installation of all games and attractions — delivered on time and on spec.
+        </p>
+      </div>
+      <div class="service-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 11a4 4 0 1 0-8 0"/><path d="M4 20v-1a6 6 0 0 1 12 0v1"/><circle cx="12" cy="7" r="3"/>
+          </svg>
+        </div>
+        <div class="service-num">05</div>
+        <h3 class="service-title" data-en="Operations Setup & Staff Training" data-ar="تجهيز التشغيل وتدريب الفريق">Operations Setup &amp; Staff Training</h3>
+        <p class="service-desc"
+           data-en="SOPs, cash controls, safety standards and full staff training programs so your venue is ready to perform from day one."
+           data-ar="إجراءات تشغيل، ضبط كاشير، معايير أمان وبرنامج تدريب كامل للفريق عشان المكان يشتغل من أول يوم.">
+          SOPs, cash controls, safety standards and full staff training programs so your venue is ready to perform from day one.
+        </p>
+      </div>
+      <div class="service-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1A2 2 0 1 1 4.4 17l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1A2 2 0 1 1 7 4.4l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1A2 2 0 1 1 19.6 7l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+          </svg>
+        </div>
+        <div class="service-num">06</div>
+        <h3 class="service-title" data-en="On-Site Technical Support" data-ar="الدعم الفني في الموقع">On-Site Technical Support</h3>
+        <p class="service-desc"
+           data-en="Ongoing technical support on-site in Egypt. Remote support available for clients outside Egypt."
+           data-ar="دعم فني مستمر في الموقع في مصر. ودعم عن بعد للعملاء خارج مصر.">
+          Ongoing technical support on-site in Egypt. Remote support available for clients outside Egypt.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROJECTS ==================== -->
+<section id="projects">
+  <div class="container">
+    <div data-aos="fade-up">
+      <span class="eyebrow" data-en="OUR PROJECTS" data-ar="مشاريعنا">OUR PROJECTS</span>
+      <h2 class="section-title"
+          data-en="Signature venues, delivered across Egypt."
+          data-ar="مراكز ترفيه مميّزة، مُنفَّذة في مصر.">
+        Signature venues, delivered across Egypt.
+      </h2>
+      <p class="section-sub"
+         data-en="A portfolio trusted by premier developers and community destinations."
+         data-ar="محفظة مشاريع تثق بها كبار المطورين ووجهات المجتمعات.">
+        A portfolio trusted by premier developers and community destinations.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      <!-- FLAGSHIP — INLANE -->
+      <div class="project-card featured" data-aos="fade-up" data-project="inlane">
+        <div class="featured-hint">
+          <span class="project-badge" data-en="FLAGSHIP" data-ar="المشروع الرئيسي">FLAGSHIP</span>
+        </div>
+        <div class="project-visual">
+          <div class="inlane-logo-wrap">
+            <!-- INLANE LOGO: replace src if path changes -->
+            <img src="logos/inlane_logo-13.png" alt="InLane"
+                 onerror="this.outerHTML='<div style=&quot;font-family:Space Grotesk,sans-serif;font-size:42px;font-weight:800;color:#0a0a0f;letter-spacing:0.03em;&quot;>InLane</div>'">
+          </div>
+          <!-- INLANE PHOTOS: paste image URLs here -->
+          <!-- INLANE VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">InLane</div>
+            <div class="project-city" data-en="New Cairo, Egypt" data-ar="القاهرة الجديدة، مصر">New Cairo, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View Gallery →" data-ar="← شوف الصور">View Gallery →</span>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="fade-up" data-project="arabella">
+        <div class="project-visual">
+          <svg class="project-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/>
+          </svg>
+          <!-- ARABELLA PHOTOS: paste image URLs here -->
+          <!-- ARABELLA VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">InLane Arabella</div>
+            <div class="project-city" data-en="New Cairo, Egypt" data-ar="القاهرة الجديدة، مصر">New Cairo, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View →" data-ar="← فتح">View →</span>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="fade-up" data-aos-delay="80" data-project="enawalks">
+        <div class="project-visual">
+          <svg class="project-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/>
+          </svg>
+          <!-- ENAWALKS PHOTOS: paste image URLs here -->
+          <!-- ENAWALKS VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">Enawalks</div>
+            <div class="project-city" data-en="New Cairo, Egypt" data-ar="القاهرة الجديدة، مصر">New Cairo, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View →" data-ar="← فتح">View →</span>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="fade-up" data-aos-delay="160" data-project="point90">
+        <div class="project-visual">
+          <svg class="project-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/>
+          </svg>
+          <!-- POINT90 PHOTOS: paste image URLs here -->
+          <!-- POINT90 VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">Point 90</div>
+            <div class="project-city" data-en="New Cairo, Egypt" data-ar="القاهرة الجديدة، مصر">New Cairo, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View →" data-ar="← فتح">View →</span>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="fade-up" data-project="nilos">
+        <div class="project-visual">
+          <svg class="project-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/>
+          </svg>
+          <!-- NILOS PHOTOS: paste image URLs here -->
+          <!-- NILOS VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">Nilos</div>
+            <div class="project-city" data-en="Dokki, Cairo, Egypt" data-ar="الدقي، القاهرة، مصر">Dokki, Cairo, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View →" data-ar="← فتح">View →</span>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="fade-up" data-aos-delay="80" data-project="suezclub">
+        <div class="project-visual">
+          <svg class="project-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/>
+          </svg>
+          <!-- SUEZCLUB PHOTOS: paste image URLs here -->
+          <!-- SUEZCLUB VIDEO: paste video URL here -->
+        </div>
+        <div class="project-info">
+          <div>
+            <div class="project-name">Suez Club</div>
+            <div class="project-city" data-en="Suez, Egypt" data-ar="السويس، مصر">Suez, Egypt</div>
+          </div>
+          <span class="project-view" data-en="View →" data-ar="← فتح">View →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LEADERSHIP ==================== -->
+<section id="leadership">
+  <div class="container">
+    <div data-aos="fade-up">
+      <span class="eyebrow" data-en="LEADERSHIP" data-ar="القيادة">LEADERSHIP</span>
+      <h2 class="section-title"
+          data-en="Founded and led by industry veterans."
+          data-ar="تأسست على أيدي نخبة من قدامى الصناعة.">
+        Founded and led by industry veterans.
+      </h2>
+      <p class="section-sub"
+         data-en="80+ years of combined experience in bowling, arcades and family entertainment across Egypt, Saudi Arabia, the Gulf and the UAE."
+         data-ar="أكتر من 80 سنة خبرة مجمّعة في البولينج والألعاب ومراكز الترفيه العائلية في مصر والسعودية والخليج والإمارات.">
+        80+ years of combined experience in bowling, arcades and family entertainment across Egypt, Saudi Arabia, the Gulf and the UAE.
+      </p>
+    </div>
+
+    <div class="leaders-grid">
+      <div class="leader-card" data-aos="fade-up">
+        <div class="avatar a1">MA</div>
+        <div class="leader-name" data-en="Eng. Mohammed Aboulghaith" data-ar="م. محمد أبوالغيط">Eng. Mohammed Aboulghaith</div>
+        <div class="leader-role" data-en="CEO & Founder" data-ar="الرئيس التنفيذي والمؤسس">CEO &amp; Founder</div>
+        <div class="leader-bio" data-en="26 years in Bowling Operations — Egypt & Saudi Arabia"
+                                data-ar="26 سنة في تشغيل البولينج — مصر والسعودية">
+          26 years in Bowling Operations — Egypt &amp; Saudi Arabia
+        </div>
+      </div>
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="avatar a2">MJ</div>
+        <div class="leader-name" data-en="Mrs. Mariam Al Jaouni" data-ar="السيدة مريم الجعوني">Mrs. Mariam Al Jaouni</div>
+        <div class="leader-role" data-en="Co-Founder & Managing Partner" data-ar="شريك مؤسس وشريك إداري">Co-Founder &amp; Managing Partner</div>
+        <div class="leader-bio" data-en="30 years in Family Entertainment Centers — Dubai & Egypt"
+                                data-ar="30 سنة في مراكز الترفيه العائلية — دبي ومصر">
+          30 years in Family Entertainment Centers — Dubai &amp; Egypt
+        </div>
+      </div>
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="avatar a3">AF</div>
+        <div class="leader-name" data-en="Mr. Ahmad Farouk" data-ar="الأستاذ أحمد فاروق">Mr. Ahmad Farouk</div>
+        <div class="leader-role" data-en="Co-Founder & Managing Partner" data-ar="شريك مؤسس وشريك إداري">Co-Founder &amp; Managing Partner</div>
+        <div class="leader-bio" data-en="27 years in Bowling & Arcades — Saudi Arabia, Gulf & Egypt"
+                                data-ar="27 سنة في البولينج والألعاب — السعودية والخليج ومصر">
+          27 years in Bowling &amp; Arcades — Saudi Arabia, Gulf &amp; Egypt
+        </div>
+      </div>
+      <div class="leader-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="avatar a4">AE</div>
+        <div class="leader-name" data-en="Eng. Ahmad Essam" data-ar="م. أحمد عصام">Eng. Ahmad Essam</div>
+        <div class="leader-role" data-en="Engineering Head & Partner" data-ar="رئيس الهندسة وشريك">Engineering Head &amp; Partner</div>
+        <div class="leader-bio" data-en="5 years in Entertainment Facility Planning & Setup — Egypt"
+                                data-ar="5 سنوات في تخطيط وتجهيز منشآت الترفيه — مصر">
+          5 years in Entertainment Facility Planning &amp; Setup — Egypt
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div data-aos="fade-up">
+        <span class="eyebrow" data-en="GET IN TOUCH" data-ar="تواصل معانا">GET IN TOUCH</span>
+        <h2 class="section-title"
+            data-en="Ready to build your venue?"
+            data-ar="جاهز تبني مكانك؟">
+          Ready to build your venue?
+        </h2>
+        <p class="section-sub"
+           data-en="Talk directly with our team — no forms, no waiting."
+           data-ar="كلّمنا مباشرة — بدون نماذج، بدون انتظار.">
+          Talk directly with our team — no forms, no waiting.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card" data-aos="fade-up">
+          <div class="contact-label" data-en="WHATSAPP" data-ar="واتساب">WHATSAPP</div>
+          <div class="contact-value"><a href="https://wa.me/201095114501" target="_blank" rel="noopener">+20 109 511 4501</a></div>
+        </div>
+        <div class="contact-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="contact-label" data-en="PHONE" data-ar="تليفون">PHONE</div>
+          <div class="contact-value">[ADD PHONE NUMBER]</div>
+        </div>
+        <div class="contact-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="contact-label" data-en="EMAIL" data-ar="إيميل">EMAIL</div>
+          <div class="contact-value">[ADD EMAIL — coming soon]</div>
+        </div>
+      </div>
+
+      <div class="contact-ctas" data-aos="fade-up">
+        <a class="btn btn-primary" href="https://wa.me/201095114501" target="_blank" rel="noopener"
+           data-en="WhatsApp Us" data-ar="راسلنا واتساب">WhatsApp Us</a>
+        <a class="btn btn-ghost" href="https://linktr.ee/inlanebowlingcenter" target="_blank" rel="noopener"
+           data-en="Follow Us" data-ar="تابعنا">Follow Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <!-- NEXT ERA LOGO: replace src if path changes -->
+      <img class="footer-logo" src="logos/next_era_logo.png" alt="Next ERA"
+           onerror="this.outerHTML='<div style=&quot;font-family:Space Grotesk,sans-serif;font-size:26px;font-weight:800;letter-spacing:0.05em;&quot;>NEXT<span style=&quot;color:var(--orange);&quot;>ERA</span></div>'">
+
+      <div class="footer-tag" data-en="THE NEXT ERA OF ENTERTAINMENT"
+                              data-ar="العصر القادم من الترفيه">THE NEXT ERA OF ENTERTAINMENT</div>
+
+      <div class="footer-links">
+        <a href="#about"      data-en="About"      data-ar="من نحن">About</a>
+        <a href="#services"   data-en="Services"   data-ar="خدماتنا">Services</a>
+        <a href="#projects"   data-en="Projects"   data-ar="مشاريعنا">Projects</a>
+        <a href="#leadership" data-en="Leadership" data-ar="القيادة">Leadership</a>
+        <a href="#contact"    data-en="Contact"    data-ar="تواصل">Contact</a>
+        <a href="https://linktr.ee/inlanebowlingcenter" target="_blank" rel="noopener"
+           data-en="Linktree" data-ar="لينكتري">Linktree</a>
+      </div>
+
+      <div class="footer-copy">© 2025 Next ERA. All Rights Reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== FLOATING WHATSAPP ==================== -->
+<a class="whatsapp-float" href="https://wa.me/201095114501" target="_blank" rel="noopener"
+   aria-label="WhatsApp Us">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.11 17.34c-.27-.13-1.6-.79-1.84-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.31.2-.58.07-.27-.13-1.15-.42-2.19-1.35-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.41.12-.54.12-.12.27-.31.41-.47.14-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.13-.61-1.47-.84-2.01-.22-.53-.45-.46-.61-.47l-.52-.01c-.18 0-.47.07-.72.34s-.95.93-.95 2.27.97 2.63 1.11 2.81c.14.18 1.91 2.92 4.64 4.1.65.28 1.16.45 1.55.57.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.31z"/>
+    <path d="M26.63 5.37A13.2 13.2 0 0 0 16 1C8.28 1 2 7.28 2 15c0 2.48.65 4.9 1.88 7.02L2 31l9.18-1.84A13.94 13.94 0 0 0 16 30c7.72 0 14-6.28 14-14a13.9 13.9 0 0 0-3.37-9.63zM16 27.5a11.5 11.5 0 0 1-5.87-1.61l-.42-.25-5.45 1.09 1.11-5.32-.27-.43A11.52 11.52 0 1 1 16 27.5z"/>
+  </svg>
+</a>
+
+<!-- ==================== LIGHTBOX ==================== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lightbox-head">
+    <div>
+      <div class="lightbox-title" id="lbTitle">Project</div>
+      <div class="lightbox-sub"   id="lbSub">City</div>
+    </div>
+    <button class="lightbox-close" id="lbClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="lightbox-body">
+    <div class="lightbox-video lightbox-placeholder" id="lbVideo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span data-en="Video coming soon" data-ar="الفيديو قريبًا">Video coming soon</span>
+    </div>
+    <div class="lightbox-gallery" id="lbGallery"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-cubic' });
+
+const nav = document.getElementById('nav');
+const links = document.querySelectorAll('.nav-links a');
+const sections = ['about','services','projects','leadership','contact'].map(id => document.getElementById(id));
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  const y = window.scrollY + 120;
+  let current = 'hero';
+  sections.forEach(s => { if (s && s.offsetTop <= y) current = s.id; });
+  links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+});
+
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+const langToggle = document.getElementById('langToggle');
+const langLabel  = document.getElementById('langLabel');
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+  langLabel.textContent = lang === 'ar' ? 'EN' : 'عربي';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val) el.textContent = val;
+  });
+}
+langToggle.addEventListener('click', () => setLang(currentLang === 'en' ? 'ar' : 'en'));
+
+const projects = {
+  inlane:   { name: 'InLane',          sub: 'New Cairo, Egypt',       photos: [], video: null },
+  arabella: { name: 'InLane Arabella', sub: 'New Cairo, Egypt',       photos: [], video: null },
+  enawalks: { name: 'Enawalks',        sub: 'New Cairo, Egypt',       photos: [], video: null },
+  point90:  { name: 'Point 90',        sub: 'New Cairo, Egypt',       photos: [], video: null },
+  nilos:    { name: 'Nilos',           sub: 'Dokki, Cairo, Egypt',    photos: [], video: null },
+  suezclub: { name: 'Suez Club',       sub: 'Suez, Egypt',            photos: [], video: null }
+};
+const projectsAr = {
+  inlane:   { name: 'إنلاين',             sub: 'القاهرة الجديدة، مصر' },
+  arabella: { name: 'إنلاين أرابيلا',      sub: 'القاهرة الجديدة، مصر' },
+  enawalks: { name: 'إناواكس',            sub: 'القاهرة الجديدة، مصر' },
+  point90:  { name: 'بوينت 90',           sub: 'القاهرة الجديدة، مصر' },
+  nilos:    { name: 'نيلوس',              sub: 'الدقي، القاهرة، مصر' },
+  suezclub: { name: 'نادي السويس',        sub: 'السويس، مصر' }
+};
+
+const lightbox = document.getElementById('lightbox');
+const lbTitle  = document.getElementById('lbTitle');
+const lbSub    = document.getElementById('lbSub');
+const lbClose  = document.getElementById('lbClose');
+const lbVideo  = document.getElementById('lbVideo');
+const lbGallery= document.getElementById('lbGallery');
+
+function openLightbox(key) {
+  const p = projects[key]; if (!p) return;
+  if (currentLang === 'ar' && projectsAr[key]) {
+    lbTitle.textContent = projectsAr[key].name;
+    lbSub.textContent   = projectsAr[key].sub;
+  } else {
+    lbTitle.textContent = p.name;
+    lbSub.textContent   = p.sub;
+  }
+  lbVideo.innerHTML = '';
+  if (p.video) {
+    lbVideo.classList.remove('lightbox-placeholder');
+    lbVideo.innerHTML = `<video src="${p.video}" controls autoplay></video>`;
+  } else {
+    lbVideo.classList.add('lightbox-placeholder');
+    lbVideo.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span>${currentLang === 'ar' ? 'الفيديو قريبًا' : 'Video coming soon'}</span>`;
+  }
+  lbGallery.innerHTML = '';
+  const count = Math.max(p.photos.length, 6);
+  for (let i = 0; i < count; i++) {
+    const tile = document.createElement('div');
+    tile.className = 'gallery-tile';
+    if (p.photos[i]) {
+      tile.innerHTML = `<img src="${p.photos[i]}" alt="${p.name} photo ${i+1}">`;
+    } else {
+      tile.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5l1.5-2h5L16 5"/></svg>`;
+    }
+    lbGallery.appendChild(tile);
+  }
+  lightbox.classList.add('open');
+  document.body.classList.add('noscroll');
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.classList.remove('noscroll');
+  lbVideo.innerHTML = '';
+}
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('click', () => openLightbox(card.dataset.project));
+});
+lbClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+(function particles() {
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, parts;
+  function resize() {
+    w = canvas.width  = canvas.offsetWidth  * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+  function create() {
+    parts = Array.from({length: 60}, () => ({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*2 + 0.4,
+      vx: (Math.random()-0.5)*0.3,
+      vy: (Math.random()-0.5)*0.3,
+      c: ['#1d7ef7','#ff7a1a','#a78bff','#26d4c7','#ffcc2e'][Math.floor(Math.random()*5)],
+      a: Math.random()*0.6 + 0.2
+    }));
+  }
+  function step() {
+    ctx.clearRect(0,0,w,h);
+    parts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = p.c;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r*devicePixelRatio, 0, Math.PI*2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(step);
+  }
+  window.addEventListener('resize', () => { resize(); create(); });
+  resize(); create(); step();
+})();
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length > 1) {
+      const el = document.querySelector(id);
+      if (el) {
+        e.preventDefault();
+        window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
+      }
+    }
+  });
+});
+
+if (window.gsap) {
+  gsap.from('.hero-logo',    { y: 30, opacity: 0, duration: 1, ease: 'power3.out' });
+  gsap.from('.hero-tagline', { y: 30, opacity: 0, duration: 1, delay: 0.15, ease: 'power3.out' });
+  gsap.from('.hero-sub',     { y: 20, opacity: 0, duration: 0.9, delay: 0.3, ease: 'power3.out' });
+  gsap.from('.hero-ctas .btn', { y: 20, opacity: 0, duration: 0.8, delay: 0.45, stagger: 0.1, ease: 'power3.out' });
+}
+</script>
+
+</body>
+</html>
