@@ -433,6 +433,41 @@
   }
 
   /* ===== PROJECTS — 5 EQUAL CARDS ===== */
+  .projects-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+  .projects-header-text { min-width: 0; }
+  .projects-header-text .section-title { margin-bottom: 16px; }
+  .projects-header-text .projects-sub { margin-bottom: 0; }
+  .projects-header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  .projects-header-logo img {
+    height: 120px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+  }
+  html[dir="rtl"] .projects-header-logo { justify-content: flex-start; }
+  @media (max-width: 900px) {
+    .projects-header {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .projects-header-logo {
+      justify-content: center;
+    }
+    .projects-header-logo img {
+      height: 80px;
+    }
+  }
   .projects-sub {
     font-size: clamp(15px, 1.3vw, 18px);
     color: var(--text-dim);
@@ -707,29 +742,6 @@
     display: grid;
     gap: 20px;
   }
-  .lightbox-video {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--bg-card-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-  }
-  .lightbox-video video, .lightbox-video iframe { width: 100%; height: 100%; display: block; }
-  .lightbox-placeholder {
-    background:
-      linear-gradient(135deg, rgba(29,126,247,0.18), rgba(167,139,255,0.14) 50%, rgba(255,122,26,0.14)),
-      var(--bg-card-2);
-    color: var(--text-dim);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 14px;
-  }
-  .lightbox-placeholder svg { width: 40px; height: 40px; opacity: 0.5; }
   .lightbox-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -975,24 +987,25 @@
 <!-- ==================== PROJECTS — 5 EQUAL CARDS ==================== -->
 <section id="projects">
   <div class="container">
-    <div data-aos="fade-up">
-      <span class="eyebrow" data-en="OUR PROJECTS" data-ar="مشاريعنا">OUR PROJECTS</span>
-      <h2 class="section-title"
-          data-en="Signature venues, delivered across Egypt."
-          data-ar="مراكز ترفيه مميّزة، مُنفَّذة في مصر.">
-        Signature venues, delivered across Egypt.
-      </h2>
-      <p class="projects-sub">
-        <span data-en="A portfolio trusted by premier developers and community destinations — all built and operated under our flagship brand"
-              data-ar="محفظة مشاريع تثق بها كبار المطورين ووجهات المجتمعات — جميعها مُنفَّذة ومُشغَّلة تحت علامتنا الرئيسية">
-          A portfolio trusted by premier developers and community destinations — all built and operated under our flagship brand
-        </span>
-        <span class="inlane-pill" aria-label="InLane">
-          <!-- INLANE LOGO: replace src if path changes -->
-          <img src="https://raw.githubusercontent.com/alielfateh/next-era-website/main/logos/inlane_logo-13.png" alt="InLane"
-               onerror="this.outerHTML='<span style=&quot;font-family:Space Grotesk,sans-serif;font-size:14px;font-weight:700;color:#fff;padding:0 2px;&quot;>InLane</span>'">
-        </span>
-      </p>
+    <div class="projects-header" data-aos="fade-up">
+      <div class="projects-header-text">
+        <span class="eyebrow" data-en="OUR PROJECTS" data-ar="مشاريعنا">OUR PROJECTS</span>
+        <h2 class="section-title"
+            data-en="Signature venues, delivered across Egypt."
+            data-ar="مراكز ترفيه مميّزة، مُنفَّذة في مصر.">
+          Signature venues, delivered across Egypt.
+        </h2>
+        <p class="projects-sub"
+           data-en="A portfolio trusted by premier developers and community destinations — all built and operated under our flagship brand."
+           data-ar="محفظة مشاريع تثق بها كبار المطورين ووجهات المجتمعات — جميعها مُنفَّذة ومُشغَّلة تحت علامتنا الرئيسية.">
+          A portfolio trusted by premier developers and community destinations — all built and operated under our flagship brand.
+        </p>
+      </div>
+      <div class="projects-header-logo" aria-label="InLane">
+        <!-- INLANE LOGO: replace src if path changes -->
+        <img src="https://raw.githubusercontent.com/alielfateh/next-era-website/main/logos/inlane_logo-13.png" alt="InLane"
+             onerror="this.outerHTML='<span style=&quot;font-family:Space Grotesk,sans-serif;font-size:42px;font-weight:800;color:#fff;letter-spacing:0.02em;&quot;>InLane</span>'">
+      </div>
     </div>
 
     <div class="projects-grid">
@@ -1253,10 +1266,6 @@
     </button>
   </div>
   <div class="lightbox-body">
-    <div class="lightbox-video lightbox-placeholder" id="lbVideo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span data-en="Video coming soon" data-ar="الفيديو قريبًا">Video coming soon</span>
-    </div>
     <div class="lightbox-gallery" id="lbGallery"></div>
   </div>
 </div>
@@ -1383,7 +1392,6 @@ const lightbox = document.getElementById('lightbox');
 const lbTitle  = document.getElementById('lbTitle');
 const lbSub    = document.getElementById('lbSub');
 const lbClose  = document.getElementById('lbClose');
-const lbVideo  = document.getElementById('lbVideo');
 const lbGallery= document.getElementById('lbGallery');
 
 function openLightbox(key) {
@@ -1394,16 +1402,6 @@ function openLightbox(key) {
   } else {
     lbTitle.textContent = p.name;
     lbSub.textContent   = p.sub;
-  }
-  lbVideo.innerHTML = '';
-  if (p.video) {
-    lbVideo.classList.remove('lightbox-placeholder');
-    lbVideo.innerHTML = `<video src="${p.video}" controls autoplay></video>`;
-  } else {
-    lbVideo.classList.add('lightbox-placeholder');
-    lbVideo.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span>${currentLang === 'ar' ? 'الفيديو قريبًا' : 'Video coming soon'}</span>`;
   }
   lbGallery.innerHTML = '';
   const count = Math.max(p.photos.length, 6);
@@ -1425,7 +1423,6 @@ function openLightbox(key) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.classList.remove('noscroll');
-  lbVideo.innerHTML = '';
 }
 document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('click', () => openLightbox(card.dataset.project));
